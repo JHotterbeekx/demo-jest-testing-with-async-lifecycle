@@ -16,13 +16,13 @@ export default class DataDisplayer extends React.Component {
 
   // We use the componentDidMount to trigger the retrieval of the data once the component is
   // mounted. Which means the component first mounts with its default state and than triggers
-  // this method so data is retrieved.
+  // this method so data is retrieved. We make the method asynchronous so we are able to use
+  // await. This gives us a better readable and debuggable way to handle the promise received
+  // from RetrieveData().
   async componentDidMount () {
-    // We create a new instance of data retriever and call the retrieve method. In this
-    // retrieve method we pass a so-called callback method as a parameter. This method will
-    // be called inside the retrieve method. As you can see the method expects a title parameter
-    // which it will set on the data property in the state and also setting the dataAvailable
-    // property to true;
+    // We call the retrieve method and wait for the promise to resolve, the result of this resolved
+    // promise will be the title, which is placed in the variable title. We validate if we indeed
+    // got a title before updating the state and marking the data as available.
     const title = await RetrieveData();
     if(title){
       this.setState({
